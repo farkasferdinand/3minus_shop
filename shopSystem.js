@@ -26,6 +26,7 @@ function prepare() {
     };
 
     xhr.send(JSON.stringify({ products: cart }));
+    
 }
 
 function updateProductList(data) {
@@ -40,6 +41,7 @@ function updateProductList(data) {
                          '<img src="' + data[i].image_url + '" alt="Kép" class="thumbnailPr">';
         productList.appendChild(item);
     }
+    summarize();
 }
 
 function removeDuplicates() {
@@ -93,7 +95,6 @@ function prepareCart() {
 function prepareCartList() {
     cart = getCartFromSession();
     prepare();
-    summarize();
 }
 
 function loadCart() {
