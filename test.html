@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Termék Kosár</title>
+</head>
+<body>
+
+<ul id="cart">
+    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
+    <li><strong>Termék Disney Frozen II Elsa by Disney, 3.4 oz Eau De Toilette</strong><br>Ár: 2490<br><img src="img/product2.jpg" alt="Kép" class="thumbnailPr"></li>
+    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
+    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
+    <li><strong>Termék Air Val Minions Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product3.webp" alt="Kép" class="thumbnailPr"></li>
+</ul>
+
+<button onclick="osszegzese()">Összegzés</button>
+
+<script>
+    function removeDuplicates() {
+        var cart = document.getElementById("cart");
+        var items = cart.getElementsByTagName("li");
+        var uniqueItems = [];
+
+        for (var i = 0; i < items.length; i++) {
+            var currentItem = items[i].innerHTML;
+
+            if (uniqueItems.indexOf(currentItem) === -1) {
+                uniqueItems.push(currentItem);
+            } else {
+                cart.removeChild(items[i]);
+                i--; // Adjust the loop counter after removing an item
+            }
+        }
+    }
+
+    function osszegzese() {
+        var cartItems = document.getElementById('cart').getElementsByTagName('li');
+        var termekSzamlalo = {};
+
+        for (var i = 0; i < cartItems.length; i++) {
+            var termekNeve = cartItems[i].getElementsByTagName('strong')[0].textContent;
+
+            if (termekSzamlalo[termekNeve]) {
+                termekSzamlalo[termekNeve]++;
+            } else {
+                termekSzamlalo[termekNeve] = 1;
+            }
+        }
+
+        for (var termek in termekSzamlalo) {
+            var termekElemek = document.querySelectorAll('li strong');
+            for (var j = 0; j < termekElemek.length; j++) {
+                if (termekElemek[j].textContent === termek) {
+                    termekElemek[j].innerHTML += '<br>Kosárban: ' + termekSzamlalo[termek];
+                }
+            }
+        }
+        removeDuplicates();
+    }
+
+    
+</script>
+
+</body>
+</html>
