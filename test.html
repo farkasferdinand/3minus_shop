@@ -1,68 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Termék Kosár</title>
-</head>
-<body>
-
 <ul id="cart">
-    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
-    <li><strong>Termék Disney Frozen II Elsa by Disney, 3.4 oz Eau De Toilette</strong><br>Ár: 2490<br><img src="img/product2.jpg" alt="Kép" class="thumbnailPr"></li>
-    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
-    <li><strong>Termék Marvel Spiderman Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product1.webp" alt="Kép" class="thumbnailPr"></li>
-    <li><strong>Termék Air Val Minions Eau de Toilette</strong><br>Ár: 1990<br><img src="img/product3.webp" alt="Kép" class="thumbnailPr"></li>
+  <li>
+    <div class="cartitem">
+      <p class="productname">Marvel Spiderman Eau de Toilette</p>
+      <p>Ár: 1990 Ft</p>Termékazonosító: <span class="productid">1</span><input type="number" width="10px" value="1"
+        class="quantity" onchange="updateTotal()"><img src="img/product1.webp" alt="Kép" class="thumbnailPr">
+    </div>
+  </li>
+  <li>
+    <div class="cartitem">
+      <p class="productname">Disney Frozen II Elsa by Disney, 3.4 oz Eau De Toilette</p>
+      <p>Ár: 2490 Ft</p>Termékazonosító: <span class="productid">2</span><input type="number" width="10px" value="1"
+        class="quantity" onchange="updateTotal()"><img src="img/product2.jpg" alt="Kép" class="thumbnailPr">
+    </div>
+  </li>
+  <li>
+    <div class="cartitem">
+      <p class="productname">Air Val Minions Eau de Toilette</p>
+      <p>Ár: 1990 Ft</p>Termékazonosító: <span class="productid">3</span><input type="number" width="10px" value="1"
+        class="quantity" onchange="updateTotal()"><img src="img/product3.webp" alt="Kép" class="thumbnailPr">
+    </div>
+  </li>
 </ul>
-
-<button onclick="osszegzese()">Összegzés</button>
-
+<button onclick="gatherProductIds()">Asd</button>
 <script>
-    function removeDuplicates() {
-        var cart = document.getElementById("cart");
-        var items = cart.getElementsByTagName("li");
-        var uniqueItems = [];
+  function gatherProductIds() {
+  var productIds = [];
+  var quantityInputs = document.querySelectorAll('.quantity');
 
-        for (var i = 0; i < items.length; i++) {
-            var currentItem = items[i].innerHTML;
+  quantityInputs.forEach(function(input) {
+    var productId = input.parentElement.querySelector('.productid').textContent;
+    var quantity = parseInt(input.value);
 
-            if (uniqueItems.indexOf(currentItem) === -1) {
-                uniqueItems.push(currentItem);
-            } else {
-                cart.removeChild(items[i]);
-                i--; // Adjust the loop counter after removing an item
-            }
-        }
+    // Az adott termékazonosítót annyiszor adjuk hozzá a listához, amennyi a quantity értéke
+    for (var i = 0; i < quantity; i++) {
+      productIds.push(parseInt(productId));
     }
+  });
 
-    function osszegzese() {
-        var cartItems = document.getElementById('cart').getElementsByTagName('li');
-        var termekSzamlalo = {};
+  console.log(productIds);
+}
 
-        for (var i = 0; i < cartItems.length; i++) {
-            var termekNeve = cartItems[i].getElementsByTagName('strong')[0].textContent;
+// A függvényt hívhatod például gombnyomás eseményre vagy más triggerekre.
+// gatherProductIds();
 
-            if (termekSzamlalo[termekNeve]) {
-                termekSzamlalo[termekNeve]++;
-            } else {
-                termekSzamlalo[termekNeve] = 1;
-            }
-        }
-
-        for (var termek in termekSzamlalo) {
-            var termekElemek = document.querySelectorAll('li strong');
-            for (var j = 0; j < termekElemek.length; j++) {
-                if (termekElemek[j].textContent === termek) {
-                    termekElemek[j].innerHTML += '<br>Kosárban: ' + termekSzamlalo[termek];
-                }
-            }
-        }
-        removeDuplicates();
-    }
-
-    
 </script>
-
-</body>
-</html>

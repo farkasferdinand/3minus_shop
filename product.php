@@ -28,9 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach($query_run as $row)
         {   
             $result[] = [
-                'name' => 'Termék ' . $row['name'],
+                'name' => $row['name'],
                 'price' => $row['price'], // Tényleges ár
-                'image_url' => $row['thumbnail']
+                'image_url' => $row['thumbnail'],
+                'product_id' => $row['product_id']
             ];
         }
     }
