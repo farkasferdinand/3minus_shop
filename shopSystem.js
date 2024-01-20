@@ -1,5 +1,5 @@
 var cart = [];
-
+var summaryHTML = "";
 // [ ] - Magyar változónevek átírása
 // [ ] - Cleanup
 // [x] - Terméknév észlelés class alapján
@@ -102,6 +102,7 @@ function prepareCart() {
     cart = getCartFromSession();
     var orderedIDs = cart.join(',');
     document.getElementById('ordered_products').value = orderedIDs;
+    getSummary();
 }
 
 function prepareCartList() {
@@ -175,5 +176,47 @@ function updateCartList() {
     saveCartToSession();
 }
 
-  // A függvényt hívhatod például gombnyomás eseményre vagy más triggerekre.
-  // gatherProductIds();
+function makeSummary() {
+    var cartItems = document.querySelectorAll('.cartitem');
+    summaryHTML = "";
+    var totalAmount = 0;
+
+    cartItems.forEach(function(item) {
+      var productName = item.querySelector('.productname').textContent;
+      var productID = item.querySelector('.productid').textContent;
+      var quantity = parseInt(item.querySelector('.quantity').value);
+      var price = parseFloat(item.querySelector('p:nth-child(2)').textContent.split(' ')[1]);
+      var imageURL = item.querySelector('.thumbnailPr').src;
+
+      var itemTotal = quantity * price;
+      totalAmount += itemTotal;
+
+      summaryHTML += '<li>';
+      summaryHTML += '<p><strong>Termék neve:</strong> ' + productName + '</p>';
+      summaryHTML += '<p><strong>Termék azonosító:</strong> ' + productID + '</p>';
+      summaryHTML += '<p><strong>Mennyiség:</strong> ' + quantity + '</p>';
+      summaryHTML += '<p><strong>Ár:</strong> ' + itemTotal + ' Ft</p>';
+      summaryHTML += '<img src="' + imageURL + '" alt="Termék kép" style="max-width: 100px; max-height: 100px;">';
+      summaryHTML += '</li>';
+    });
+
+    summaryHTML += '</ul>';
+    summaryHTML += '<p><strong>Összesen:</strong> ' + totalAmount + ' Ft</p>';
+    alert(summaryHTML);
+    saveSummaryToSession(summaryHTML);
+}
+
+function saveSummaryToSession(data) {
+    sessionStorage.setItem('summary', JSON.stringify(data));
+}
+
+function getSummary() {
+    var summary = JSON.parse(sessionStorage.getItem('summary'));
+    alert(summary);
+    document.getElementById('summary').value = summary;
+}
+
+function goToCheckout() {
+    makeSummary();
+    window.location.href = "checkout.html"
+}

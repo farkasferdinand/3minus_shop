@@ -29,6 +29,7 @@ $telephone = isset($_POST['telephone']) ? $_POST['telephone'] : '';
 $comment = isset($_POST['comment']) ? $_POST['comment'] : '';
 $order_date = date("Y-m-d");
 $ordered_products = isset($_POST['ordered_products']) ? $_POST['ordered_products'] : '';
+$summary = isset($_POST['summary']) ? $_POST['summary'] : '';
 
 
 // SQL lekérdezés az adatok beszúrásához
@@ -39,7 +40,6 @@ if ($conn->query($sql) === TRUE) {
     // Az adatok sikeresen el lettek mentve az adatbázisba
 
     // Email küldése
-
     $order_id = $conn->insert_id;
 
     $mail = new PHPMailer;
@@ -55,14 +55,15 @@ if ($conn->query($sql) === TRUE) {
     $mail->Encoding = 'base64';
 
     $mail->setFrom('3minus.perfumes@gmail.com', '3minus');
-    $mail->addAddress('farkasferdike@gmail.com', 'Címzett Név');
+    $mail->addAddress($email, 'Címzett');
 
     $mail->isHTML(true);
     $mail->Subject = 'Rendelés megerősítése';
-    $mail->Body = "Tisztelt $name!<br>Köszönjök megrendelését!<br>Rendelés azonosító: #$order_id<br><br>Megrendelt termékek azonosítói: $ordered_products<br>Szállítási adatok: $zipcode $city $address";
+    $mail->Body = "Tisztelt $name!<br>Köszönjök megrendelését!<br>Rendelés azonosító: #$order_id<br><br>Megrendelt termékek: $summary<br>Szállítási adatok: $zipcode $city $address";
 
     if($mail->send()) {
         echo "Az adatok sikeresen el lettek mentve az adatbázisba, és emailt küldtünk a megadott címre.";
+        echo($summary);
     } else {
         echo "Az adatok sikeresen el lettek mentve az adatbázisba, de probléma merült fel az email küldése során. Hiba: {$mail->ErrorInfo}";
     }

@@ -1,46 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart Summary</title>
+</head>
+<body>
+
 <ul id="cart">
   <li>
     <div class="cartitem">
       <p class="productname">Marvel Spiderman Eau de Toilette</p>
-      <p>Ár: 1990 Ft</p>Termékazonosító: <span class="productid">1</span><input type="number" width="10px" value="1"
-        class="quantity" onchange="updateTotal()"><img src="img/product1.webp" alt="Kép" class="thumbnailPr">
+      <p>Ár: 1990 Ft</p>
+      Termékazonosító: <span class="productid">1</span>
+      <input type="number" width="10px" value="1" class="quantity" onchange="updateTotal()">
+      <img src="img/product1.webp" alt="Kép" class="thumbnailPr">
     </div>
   </li>
   <li>
     <div class="cartitem">
       <p class="productname">Disney Frozen II Elsa by Disney, 3.4 oz Eau De Toilette</p>
-      <p>Ár: 2490 Ft</p>Termékazonosító: <span class="productid">2</span><input type="number" width="10px" value="1"
-        class="quantity" onchange="updateTotal()"><img src="img/product2.jpg" alt="Kép" class="thumbnailPr">
-    </div>
-  </li>
-  <li>
-    <div class="cartitem">
-      <p class="productname">Air Val Minions Eau de Toilette</p>
-      <p>Ár: 1990 Ft</p>Termékazonosító: <span class="productid">3</span><input type="number" width="10px" value="1"
-        class="quantity" onchange="updateTotal()"><img src="img/product3.webp" alt="Kép" class="thumbnailPr">
+      <p>Ár: 2490 Ft</p>
+      Termékazonosító: <span class="productid">2</span>
+      <input type="number" width="10px" value="1" class="quantity" onchange="updateTotal()">
+      <img src="img/product2.jpg" alt="Kép" class="thumbnailPr">
     </div>
   </li>
 </ul>
-<button onclick="gatherProductIds()">Asd</button>
+
+<div id="summary"></div>
+
 <script>
-  function gatherProductIds() {
-  var productIds = [];
-  var quantityInputs = document.querySelectorAll('.quantity');
+  function makeSummary() {
+    var cartItems = document.querySelectorAll('.cartitem');
 
-  quantityInputs.forEach(function(input) {
-    var productId = input.parentElement.querySelector('.productid').textContent;
-    var quantity = parseInt(input.value);
+    var totalAmount = 0;
 
-    // Az adott termékazonosítót annyiszor adjuk hozzá a listához, amennyi a quantity értéke
-    for (var i = 0; i < quantity; i++) {
-      productIds.push(parseInt(productId));
-    }
-  });
+    cartItems.forEach(function(item) {
+      var productName = item.querySelector('.productname').textContent;
+      var productID = item.querySelector('.productid').textContent;
+      var quantity = parseInt(item.querySelector('.quantity').value);
+      var price = parseFloat(item.querySelector('p:nth-child(2)').textContent.split(' ')[1]);
+      var imageURL = item.querySelector('.thumbnailPr').src;
 
-  console.log(productIds);
-}
+      var itemTotal = quantity * price;
+      totalAmount += itemTotal;
 
-// A függvényt hívhatod például gombnyomás eseményre vagy más triggerekre.
-// gatherProductIds();
+      summaryHTML += '<li>';
+      summaryHTML += '<p><strong>Termék neve:</strong> ' + productName + '</p>';
+      summaryHTML += '<p><strong>Termék azonosító:</strong> ' + productID + '</p>';
+      summaryHTML += '<p><strong>Mennyiség:</strong> ' + quantity + '</p>';
+      summaryHTML += '<p><strong>Ár:</strong> ' + itemTotal + ' Ft</p>';
+      summaryHTML += '<img src="' + imageURL + '" alt="Termék kép" style="max-width: 100px; max-height: 100px;">';
+      summaryHTML += '</li>';
+    });
 
+    summaryHTML += '</ul>';
+    summaryHTML += '<p><strong>Összesen:</strong> ' + totalAmount + ' Ft</p>';
+
+    document.getElementById('summary').innerHTML = summaryHTML;
+  }
 </script>
+
+</body>
+</html>
