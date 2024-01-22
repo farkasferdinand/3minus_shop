@@ -26,6 +26,7 @@
 
 <script src="https://kit.fontawesome.com/8cd5027783.js" crossorigin="anonymous"></script>
 
+
   <title>3minus Webshop</title>
 </head>
 
@@ -46,10 +47,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Kezdőlap</a>
+                  <a class="nav-link" aria-current="page" href="index.html">Kezdőlap</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Parfümök</a>
+                  <a class="nav-link active" href="#">Parfümök</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Parfümolajok</a>
@@ -75,11 +76,71 @@
 
     <section>
       <div class="content-area">
-        <br>
+        <div class="content-area-inner">
+          <div class="row">
+            <div class="col-lg-3 sidebar">
+
+                <div class="price-input-container">
+                  <div class="price-input">
+                      <div class="price-field">
+                          <div id="input-center">
+                            <input type="number"
+                                   class="min-input"
+                                   value="2500">
+                            <p>  -  </p>
+                            <input type="number"
+                                   class="max-input"
+                                   value="8500">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="slider-container">
+                      <div class="price-slider">
+                      </div>
+                  </div> 
+                            </div>
+          
+            <!-- Slider -->
+            <div class="range-input"> 
+                <input type="range" 
+                       class="min-range" 
+                       min="0" 
+                       max="100000" 
+                       value="2500" 
+                       step="100"> 
+                <input type="range" 
+                       class="max-range" 
+                       min="0" 
+                       max="100000" 
+                       value="8500" 
+                       step="100"> 
+                       <script src="ui.js"></script>
+            </div> 
+              
+              <br><br><br><br><br><br><br><br><br>
+            </div>
+            <div class="col-lg-9 products">
+
+              <br><br><br><br><br><br><br><br><br>
+            </div>
+          </div>
+
+                  
+          
+        </div>
+        
+
+
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
       </div>
+
+
+
     </section>
     <br><br><br><br><br><br><br><br><br><br><br><br>
+
   </div>
 
   <!-- Optional JavaScript -->
@@ -94,5 +155,6 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 </body>
+
 
 </html>
