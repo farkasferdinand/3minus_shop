@@ -157,7 +157,7 @@ body {
 }
 
 .content-area-inner {
-    width: 80%;
+    width: 1200px;
     display: block;
     margin: 0 auto;
 }
@@ -302,7 +302,80 @@ input[type="range"]::-webkit-slider-thumb {
     } 
 }
 
+.product-card {
+    background-color: rgb(255, 255, 255);
+    width: 250px;
+    padding: 20px;
+    margin: 20px;
+    float: right;
+    box-shadow: 3px 0px 13px rgb(180, 180, 180);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
 
+.product-card a {
+    color: black;
+}
+
+.product-card a:hover {
+    color:grey;
+}
+
+.product-card h3 {
+    font-size: 1.1em;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.product-card img {
+    height: 170px;
+    margin: auto;
+    display: block;
+}
+
+.pr-card-container {
+    padding: 20px;
+}
+
+.cartbtn {
+    width: 100px;
+    height: 40px;
+    background-color: #886e36;
+    color: white;
+    font-size: .95em;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.cartbtn:hover {
+    background-color: #a88f45;
+}
+
+.pr-text-container {
+    height: 80px;
+}
+
+.pr-button-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pr-button-container p{
+    margin: 0;
+    font-size: 1.2em;
+}
+
+/* .pr-button-container button{
+    float: right;
+}
+
+ */
 
 /* ---------------------------------------- */
 
@@ -324,3 +397,48 @@ input[type="range"]::-webkit-slider-thumb {
     0% {background-color: transparent;}
     100% {background-color: #886e36;}
 }
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+  }
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }

@@ -97,14 +97,13 @@ for (let i = 0; i < priceInputvalue.length; i++) {
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
+function updateVal() {
+    minVal = 0
+    maxVal = 100000
+    priceInputvalue[0].value = minVal; 
+    priceInputvalue[1].value = maxVal; 
+    rangevalue.style.left = 
+        `${(minVal / rangeInputvalue[0].max) * 100}%`; 
+    rangevalue.style.right = 
+        `${100 - (maxVal / rangeInputvalue[1].max) * 100}%`; 
 }
