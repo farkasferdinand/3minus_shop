@@ -23,31 +23,104 @@
         crossorigin="anonymous"></script>
     <script src="shopSystem.js"></script>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Noto+Sans+Indic+Siyaq+Numbers&family=Roboto+Slab:wght@300&display=swap"
+      rel="stylesheet">
+  
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  
+  <script src="https://kit.fontawesome.com/8cd5027783.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body onload="prepareCartList()">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">3minus</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="checkout.html">Kosár<span class="sr-only">(current)</span></a>
-            </li>
-            </ul>
+    <div>
+        <div class="row header">
+          <div class="col-lg-3">
+            <img src="src/logo.png" alt="" class="logo">
+          </div>
+          <div class="col-lg-9 nav-center">
+            <nav class="navbar navbar-expand-lg navbar-dark nav-design nav-custom">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="index.html">Kezdőlap</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="products.php?ptype=parfum">Parfümök</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Parfümolajok</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Szettek</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Minták</a>
+                    </li>
+                  </ul>
+    
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link text-white active" href="cart.html"><i class="fas fa-shopping-cart navcart"></i></a>
+                    </li>
+                </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
         </div>
-      </nav>
+    
+        <section>
+            <div class="content-area">
+              <div class="content-area-inner">
 
-    <h2>Kosár</h2>
-    <ul id="cart"></ul>
+                <h2 class="title">Kosár</h2>
 
-    <div id="total">
-        <p id="totalAmount">Összesen: Ft</p>
-    </div>
+                <div class="row">
+                  <div class="col-lg-8">
+                    <ul id="cart"></ul>  
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="panel-summary">
+                      <div id="total">
+                        <span>Termékek:</span>
+                        <span class="num-right"> 12345 Ft</span>
+                        <hr>
+                        <span id="totalAmount">Összesen:</span>
+                        <span class="num-right"> 12345 Ft</span>
+                      </div>
+                      <button class="cartbtn" onclick="goToCheckout()">Tovább</button>
+                    </div>
+                  </div>
+
+                </div>
+
+              <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+              </div>
+            </div>
+          </section>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+      </div>
+
+    
+
+
 
     <!-- Snackbar notify -->
     <div id="snackbar">A termék a kosárba került!</div>
 
-    <button class="btn btn-primary" onclick="goToCheckout()">Vásárlás</button>
+
 </body>
 
 </html>

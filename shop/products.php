@@ -96,7 +96,7 @@ $result = $conn->query($sql);
 
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item me-3 me-lg-0">
-                    <a class="nav-link text-white" href="#"><i class="fas fa-shopping-cart navcart"></i></a>
+                    <a class="nav-link text-white" href="cart.html"><i class="fas fa-shopping-cart navcart"></i></a>
                 </li>
             </ul>
             </div>
@@ -156,15 +156,16 @@ $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
         while($row = $result->fetch_assoc()) {
-            echo '<div class="product-card ' . $row["ptype"] . '">';
+            echo '<div class="product-card">';
             echo '<div class="pr-img-container"><img src="' . $row["thumbnail"] . '" alt="' . $row["name"] . '"></div>';
+            echo '<p class="pr-brand-name">'. $row["brand"] .'</p>';
             echo '<div class="pr-text-container"><a href="' . $row["url"] . '"><h3>' . $row["name"] . '</h3></a></div>';
             echo '<div class="pr-button-container"><p>' . $row["price"] . ' Ft</p>';
             echo '<button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ')">Kosárba</button></div>';
             echo '</div>';
         }
     } else {
-        echo "Nincs elérhető termék a megadott áron az adatbázisban.";
+        echo "Nincs a paramétereknek megfelelő termék az adatbázisban.";
     }
 
 // Adatbázis kapcsolat lezárása

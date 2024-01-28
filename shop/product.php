@@ -29,9 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         {   
             $result[] = [
                 'name' => $row['name'],
-                'price' => $row['price'], // Tényleges ár
+                'price' => $row['price'], 
                 'image_url' => $row['thumbnail'],
-                'product_id' => $row['product_id']
+                'product_id' => $row['product_id'],
+                'brand' => $row['brand']
             ];
         }
     }

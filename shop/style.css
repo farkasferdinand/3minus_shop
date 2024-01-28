@@ -215,7 +215,6 @@ body {
 /* Remove Arrows/Spinners */
 input::-webkit-outer-spin-button, 
 input::-webkit-inner-spin-button { 
-    -webkit-appearance: none; 
     margin: 0; 
 } 
   
@@ -251,7 +250,6 @@ input::-webkit-inner-spin-button {
     top: -5px; 
     pointer-events: none; 
     cursor: pointer; 
-    -webkit-appearance: none; 
 } 
   
 #input-center {
@@ -323,7 +321,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 .product-card h3 {
     font-size: 1.1em;
-    margin-top: 10px;
     font-weight: bold;
 }
 
@@ -358,6 +355,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .pr-text-container {
     height: 80px;
+    /* margin-top: 10px; */
 }
 
 .pr-button-container {
@@ -370,6 +368,101 @@ input[type="range"]::-webkit-slider-thumb {
     margin: 0;
     font-size: 1.2em;
 }
+
+.pr-brand-name {
+    margin: 10px 0 0 0;
+}
+
+.title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+/* Cart itemek */
+
+.cartitem {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 3px 0px 13px rgb(180, 180, 180);
+    font-family: 'Montserrat', sans-serif;
+    padding: 15px;
+    width: 600px;
+    margin: 20px;
+}
+
+.cartitem img{
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+}
+
+.productname {
+    margin-bottom: 0px;
+}
+
+.productid {
+    margin-top: 0px;
+    color: #909090;
+}
+
+.productprice {
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+.quantity {
+    margin: 0;
+    width: 40px;
+}
+
+.pr-btns-container {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#cart {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.panel-summary {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 3px 0px 13px rgb(180, 180, 180);
+    font-family: 'Montserrat', sans-serif;
+    padding: 15px;
+}
+
+.panel-summary hr {
+    margin: 5px 0 5px 0;
+}
+
+.panel-summary .cartbtn {
+    margin: 10px auto 10px auto;
+    display: block;
+}
+
+.num-right {
+    float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* .pr-button-container button{
     float: right;

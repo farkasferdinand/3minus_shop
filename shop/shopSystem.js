@@ -36,11 +36,22 @@ function updateProductList(data) {
 
     for (var i = 0; i < data.length; i++) {
         var item = document.createElement("li");
-        item.innerHTML = '<div class="cartitem"><p class="productname">' + data[i].name + '</p>' +
-            '<p>Ár: ' + data[i].price + ' Ft' + '</p>' +
-            'Termékazonosító: <span class="productid">' + data[i].product_id + '</span>' +
-            '<input type="number" width="10px" value="1" class="quantity" onchange="updateTotal()">' +
-            '<img src="' + data[i].image_url + '" alt="Kép" class="thumbnailPr"></div>';
+        item.innerHTML = '<div class="cartitem">' +
+        '<img src="' + data[i].image_url + '" alt="Kép" class="thumbnailPr">' +
+        '<div class="row">' +
+        '    <div class="col-lg-8">' +
+        '        <p class="productname">'+ data[i].brand +'  <strong>'+ data[i].name +'</strong></p>' +
+        '        <p class="productid">#'+ data[i].product_id +'</p>' +
+        '        <p class="productprice">'+ data[i].price +' Ft</p>' +
+        '    </div>' +
+        '    <div class="col-lg-4">' +
+        '        <div class="pr-btns-container">' +
+        '            <input type="number" value="1" class="quantity" onchange="updateTotal()">' +
+        '            <button type="button" class="btn btn-danger" onclick="removeFromCart(' + data[i].product_id + ')"><i class="fa fa-trash-o"></i></button>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>' +
+        '</div>';
         productList.appendChild(item);
     }
     summarize();
@@ -142,8 +153,8 @@ function updateTotal() {
     var items = document.querySelectorAll('#cart .cartitem');
 
     items.forEach(function (item) {
-        var priceText = item.querySelector('p:nth-child(2)').textContent;
-        var price = parseFloat(priceText.split(' ')[1]); // Kivonja az árat a szövegből
+        var priceText = item.querySelector('.productprice').textContent;
+        var price = parseFloat(priceText.split(' ')[0]); // Kivonja az árat a szövegből
         var quantity = parseInt(item.querySelector('.quantity').value);
         var itemTotal = price * quantity;
         totalAmount += itemTotal;
@@ -158,7 +169,8 @@ function gatherProductIds() {
     var quantityInputs = document.querySelectorAll('.quantity');
 
     quantityInputs.forEach(function (input) {
-        var productId = input.parentElement.querySelector('.productid').textContent;
+        var productId = input.parentElement.parentElement.parentElement.querySelector('.productid').textContent;
+        productId = productId.replace("#", "");
         var quantity = parseInt(input.value);
 
         // Az adott termékazonosítót annyiszor adjuk hozzá a listához, amennyi a quantity értéke
@@ -176,6 +188,16 @@ function updateCartList() {
     saveCartToSession();
 }
 
+function removeFromCart(item) {
+    cart = getCartFromSession();
+    for (var i = 0; i < cart.length; i++) {
+        if (cart[i] == item) {
+            delete cart[i];
+        }
+    }
+    prepare();
+}
+
 function makeSummary() {
     var cartItems = document.querySelectorAll('.cartitem');
     summaryHTML = "";
@@ -185,7 +207,7 @@ function makeSummary() {
       var productName = item.querySelector('.productname').textContent;
       var productID = item.querySelector('.productid').textContent;
       var quantity = parseInt(item.querySelector('.quantity').value);
-      var price = parseFloat(item.querySelector('p:nth-child(2)').textContent.split(' ')[1]);
+      var price = parseFloat(item.querySelector('.productprice').textContent.split(' ')[1]);
       var imageURL = item.querySelector('.thumbnailPr').src;
 
       var itemTotal = quantity * price;
