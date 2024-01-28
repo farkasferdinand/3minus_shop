@@ -39,7 +39,7 @@
 
 </head>
 
-<body onload="prepareCartList()">
+<body onload="prepareCart()">
     <div>
         <div class="row header">
           <div class="col-lg-3">
@@ -86,59 +86,38 @@
             <div class="content-area">
               <div class="content-area-inner">
 
-                <h2 class="title">Kosár</h2>
+                <h2 class="title">Rendelési adatok</h2>
 
-                <div class="row">
-                  <div class="col-lg-8">
-                    <div id="content1">
-                      <ul id="cart"></ul>  
-                    </div>
-                    <div id="content2">
-                      <h3>Fizetési mód</h3>
-                      <hr>
-                      <div class="radio-container">
-                        <form action="">
-                          <input type="radio" id="opt_card" name="pay_method" value="card">
-                          <label for="opt_card"> <i class="fa-solid fa-credit-card"></i> Online Bankkártyával</label><br>
-                          <input type="radio" id="opt_paypal" name="pay_method" value="paypal">
-                          <label for="opt_paypal"> <i class="fa-brands fa-paypal"></i> PayPal</label><br>
-                          <input type="radio" id="opt_cash" name="pay_method" value="cash">
-                          <label for="opt_cash"> <i class="fa-solid fa-money-bill"></i> Utánvét (+ 490 Ft)</label><br>
-                        </form>
-                      </div>
+                <form action="/orderManager.php" method="post">
+                    <label for="name">Név:</label>
+                    <input type="text" name="name" id="name" >
+                
+                    <label for="email">E-mail:</label>
+                    <input type="email" name="email" id="email">
+                
+                    <label for="zipcode">Irányítószám:</label>
+                    <input type="text" name="zipcode" id="zipcode">
+                
+                    <label for="city">Település:</label>
+                    <input type="text" name="city" id="city">
+                
+                    <label for="address">Cím:</label>
+                    <input type="text" name="address" id="address">
+                
+                    <label for="telephone">Telefonszám:</label>
+                    <input type="text" name="telephone" id="telephone">
+                
+                    <label for="comment">Megjegyzés:</label>
+                    <input type="text" name="comment" id="comment">
+                
+                    <input type="hidden" name="ordered_products" id="ordered_products">
+                    <input type="text" name="summary" id="summary">
+                    
+                
+                    <input type="submit" value="Vásárlás">
+                </form>
 
-                      <h3>Átvételi mód</h3>
-                      <hr>
-                      <div class="radio-container">
-                        <input type="radio" id="opt_shop" name="shipping_method" value="shop">
-                        <label for="opt_shop"> <i class="fa-solid fa-shop"></i> Személyes átvétel üzletünkben</label><br>
-                        <input type="radio" id="opt_shipping" name="shipping_method" value="shipping">
-                        <label for="opt_shipping"> <i class="fa-solid fa-truck-fast"></i> GLS futárszolgálat (+ 1290 Ft)</label><br>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="panel-summary">
-                      <div id="total">
-                        <span>Termékek:</span>
-                        <span class="num-right orderitem" id="prTotalAmount"> 0 Ft</span><br>
-                        <span>Fizetési mód:</span>
-                        <span class="num-right orderitem" id="amountPay"> 0 Ft</span><br>
-                        <span>Szállítás:</span>
-                        <span class="num-right orderitem" id="amountShipping"> 0 Ft</span>
-                        <hr>
-                        <span>Összesen:</span>
-                        <span class="num-right" id="totalAmount"> 0 Ft</span>
-                      </div>
-                      <!-- goToCheckout() -->
-                      <button class="cartbtn" onclick="switchContent()">Tovább</button>
-                    </div>
-                  </div>
-
-                </div>
               </div>
-
-  
               <br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
           </section>

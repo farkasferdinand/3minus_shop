@@ -450,9 +450,22 @@ input[type="range"]::-webkit-slider-thumb {
     float: right;
 }
 
+#content2{
+    font-family: 'Montserrat', sans-serif;
+    display: none;
+}
 
+#content2 h3 {
+    font-size: 1.5em;
+}
 
+#content2 hr {
+    margin: 0;
+}
 
+.radio-container {
+    margin: 10px;
+}
 
 
 

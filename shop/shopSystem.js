@@ -160,7 +160,21 @@ function updateTotal() {
         totalAmount += itemTotal;
     });
 
-    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+    document.getElementById('prTotalAmount').textContent = totalAmount + " Ft";
+
+    var orderItems = document.querySelectorAll('.orderitem');
+
+    // Kezdetben a totalAmount értékét 0-ra állítjuk
+    var totalAmount = 0;
+    
+    // Végigmegyünk az orderItem elemeken és hozzáadjuk az értékeiket a totalAmount-hoz
+    orderItems.forEach(function(item) {
+      totalAmount += parseFloat(item.innerText.replace(' Ft', '')) || 0;
+    });
+  
+    // Beírjuk az eredményt a totalAmount id-vel rendelkező span-be
+    document.getElementById('totalAmount').innerText = totalAmount + ' Ft';
+
     updateCartList();
 }
 
@@ -240,5 +254,26 @@ function getSummary() {
 
 function goToCheckout() {
     makeSummary();
+    sessionStorage.setItem('payMethod', getPayMethod())
+    sessionStorage.setItem('shippingMethod', getShippingMethod())
     window.location.href = "checkout.html"
 }
+
+function switchContent() {
+    var c1 = document.getElementById("content1");
+    var c2 = document.getElementById("content2");
+
+    if (c1.style.display === "none") {
+        goToCheckout();
+    }
+    else {
+        c1.style.display = "none";
+        c2.style.display = "block";
+    }
+
+
+
+
+    
+  }
+
