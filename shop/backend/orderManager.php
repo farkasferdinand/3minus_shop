@@ -20,7 +20,8 @@ if ($conn->connect_error) {
 }
 
 
-$name = isset($_POST['name']) ? $_POST['name'] : '';
+$firstname = isset($_POST['firstname']) ? $_POST['firstname'] : '';
+$lastname = isset($_POST['lastname']) ? $_POST['lastname'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $zipcode = isset($_POST['zipcode']) ? $_POST['zipcode'] : '';
 $city = isset($_POST['city']) ? $_POST['city'] : '';
@@ -33,7 +34,7 @@ $summary = isset($_POST['summary']) ? $_POST['summary'] : '';
 
 
 // SQL lekérdezés az adatok beszúrásához
-$sql = "INSERT INTO `orders` (`order_id`, `name`, `email`, `zipcode`, `city`, `address`, `telephone`, `comment`, `order_date`, `ordered_products`) VALUES (NULL, '$name', '$email', '$zipcode', '$city', '$address', '$telephone', '$comment', '$order_date', '$ordered_products');";
+$sql = "INSERT INTO `orders` (`order_id`, `name`, `email`, `zipcode`, `city`, `address`, `telephone`, `comment`, `order_date`, `ordered_products`) VALUES (NULL, '$firstname $lastname', '$email', '$zipcode', '$city', '$address', '$telephone', '$comment', '$order_date', '$ordered_products');";
 
 // Lekérdezés végrehajtása
 if ($conn->query($sql) === TRUE) {
@@ -59,14 +60,14 @@ if ($conn->query($sql) === TRUE) {
 
     $mail->isHTML(true);
     $mail->Subject = 'Rendelés megerősítése';
-    $mail->Body = "Tisztelt $name!<br>Köszönjök megrendelését!<br>Rendelés azonosító: #$order_id<br><br>Megrendelt termékek: $summary<br>Szállítási adatok: $zipcode $city $address";
+    $mail->Body = "Tisztelt $firstname $lastname!<br>Köszönjök megrendelését!<br>Rendelés azonosító: #$order_id<br><br>Megrendelt termékek: $summary<br>Szállítási adatok: $zipcode $city $address";
 
-    if($mail->send()) {
+    /* if($mail->send()) {
         echo "Az adatok sikeresen el lettek mentve az adatbázisba, és emailt küldtünk a megadott címre.";
-        echo($summary);
     } else {
         echo "Az adatok sikeresen el lettek mentve az adatbázisba, de probléma merült fel az email küldése során. Hiba: {$mail->ErrorInfo}";
-    }
+    } */
+    echo $summary;
 
 } else {
     echo "Hiba az adatok mentése során: " . $conn->error;

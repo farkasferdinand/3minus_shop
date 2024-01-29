@@ -148,6 +148,17 @@ function snackbarAddedToCart() {
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
 
+function snackbarRemovedFromCart() {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar2");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
+
 function updateTotal() {
     var totalAmount = 0;
     var items = document.querySelectorAll('#cart .cartitem');
@@ -209,6 +220,7 @@ function removeFromCart(item) {
             delete cart[i];
         }
     }
+    snackbarRemovedFromCart();
     prepare();
 }
 
@@ -221,22 +233,25 @@ function makeSummary() {
       var productName = item.querySelector('.productname').textContent;
       var productID = item.querySelector('.productid').textContent;
       var quantity = parseInt(item.querySelector('.quantity').value);
-      var price = parseFloat(item.querySelector('.productprice').textContent.split(' ')[1]);
+      var price = parseFloat(item.querySelector('.productprice').textContent.split(' ')[0]);
       var imageURL = item.querySelector('.thumbnailPr').src;
 
       var itemTotal = quantity * price;
       totalAmount += itemTotal;
 
-      summaryHTML += '<li>';
-      summaryHTML += '<p><strong>Termék neve:</strong> ' + productName + '</p>';
-      summaryHTML += '<p><strong>Termék azonosító:</strong> ' + productID + '</p>';
-      summaryHTML += '<p><strong>Mennyiség:</strong> ' + quantity + '</p>';
-      summaryHTML += '<p><strong>Ár:</strong> ' + itemTotal + ' Ft</p>';
-      summaryHTML += '<img src="' + imageURL + '" alt="Termék kép" style="max-width: 100px; max-height: 100px;">';
-      summaryHTML += '</li>';
+      summaryHTML += '<div class="cartitem"><img src="'+ imageURL + '" alt="Kép" class="thumbnailPr" width="100px">'
+      summaryHTML += '    <p class="productname">' + productName+' (' + quantity+ ' db)</p>'
+      summaryHTML += '    <p class="productid">' + productID+ '</p>'
+      summaryHTML += '    <p class="productprice">' + price+' Ft</p>'
+      summaryHTML += '</div>';
     });
 
-    summaryHTML += '</ul>';
+    var shippingAmount = parseInt(document.getElementById("amountShipping").textContent.split(' ')[0]);
+    var payAmount = parseInt(document.getElementById("amountPay").textContent.split(' ')[0]);
+
+    summaryHTML += '<p>Szállítás:' + shippingAmount+ ' Ft<p>';
+    summaryHTML += '<p>Fizetési mód:' + payAmount+ ' Ft<p>';
+    totalAmount = totalAmount + shippingAmount + payAmount;
     summaryHTML += '<p><strong>Összesen:</strong> ' + totalAmount + ' Ft</p>';
     alert(summaryHTML);
     saveSummaryToSession(summaryHTML);
@@ -248,7 +263,6 @@ function saveSummaryToSession(data) {
 
 function getSummary() {
     var summary = JSON.parse(sessionStorage.getItem('summary'));
-    alert(summary);
     document.getElementById('summary').value = summary;
 }
 
