@@ -15,18 +15,40 @@ if ($conn->connect_error) {
 // Árparaméter ellenőrzése az URL-ben
 $typeFilter = isset($_GET['ptype']) ? $_GET['ptype'] : null;
 
+$minPrice = isset($_GET['minprice']) ? $_GET['minprice'] : 0;
+$maxPrice = isset($_GET['maxprice']) ? $_GET['maxprice'] : 100000;
+echo $minPrice;
+echo $maxPrice;
+
 // Lekérdezés az árparaméter alapján
 $sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, strength, ptype FROM products";
+
+$wused = false;
 
 // Ha meg van adva árparaméter, akkor szűrjük az áron
 if ($typeFilter !== null) {
     $sql .= " WHERE ptype = '$typeFilter'";
+    $wused = true;
 }
 
-echo $typeFilter;
+if ($minPrice !== null && $maxPrice !== null) {
+  if ($wused == true) {
+    $sql .= " AND ";
+  }
+
+  if ($wused == false) {
+    $sql .= " WHERE ";
+    $wused = true;
+  }
+
+  $sql .= "price BETWEEN $minPrice AND $maxPrice";
+}
+
 
 $result = $conn->query($sql);
 ?>
+
+
 
 <!doctype html>
 <html lang="hu">
@@ -111,46 +133,67 @@ $result = $conn->query($sql);
           <div class="row">
             <div class="col-lg-3 sidebar">
 
-                <div class="price-input-container">
-                  <div class="price-input">
-                      <div class="price-field">
-                          <div id="input-center">
-                            <input type="number"
-                                   class="min-input"
-                                   value="0">
-                            <p>  -  </p>
-                            <input type="number"
-                                   class="max-input"
-                                   value="100000">
-                          </div>
-                      </div>
-                  </div>
-                  <div class="slider-container">
-                      <div class="price-slider">
-                      </div>
-                  </div> 
+                <form id="filterform">
+                  <div class="price-input-container">
+                    <p>Ár (Ft)</p>
+                    <div class="price-input">
+                        <div class="price-field">
+                            <div id="input-center">
+                              <?php 
+                                echo "<input type='number' class='min-input' value='$minPrice' id='min-price' name='minprice'><p>  -  </p>";
+                                echo "<input type='number' class='max-input' value='$maxPrice' id='max-price' name='maxprice'>";
+                              ?>
+<!--                               <input type="number"
+                                     class="min-input"
+                                     value="<>"
+                                     id="min-price"
+                                     name="minprice"
+                                     > -->
+                              <!-- <p>  -  </p>
+                              <input type="number"
+                                     class="max-input"
+                                     value="100000"
+                                     id="max-price"
+                                     name="maxprice"
+                                     > -->
                             </div>
+                        </div>
+                    </div>
+                    <div class="slider-container">
+                        <div class="price-slider">
+                        </div>
+                    </div>
+                  </div>
+
           
             <!-- Slider -->
             <div class="range-input"> 
-                <input type="range" 
-                       class="min-range" 
-                       min="0" 
-                       max="100000" 
-                       value="100000" 
-                       step="100"> 
-                <input type="range" 
-                       class="max-range" 
-                       min="0" 
-                       max="100000" 
-                       value="0" 
-                       step="100"> 
-                       <script src="ui.js"></script>
+              <?php
+                echo "<input type='range' class='min-range' min='0' max='99500' value='$minPrice' step='100' onchange='filterProducts()'>";
+                echo "<input type='range' class='max-range' min='500' max='100000' value='$maxPrice' step='100' onchange='filterProducts()'>";
+              ?>
+            	<!-- <input type="range" 
+            		   class="min-range" 
+            		   min="0" 
+            		   max="99500" 
+            		   value="0" 
+            		   step="100"
+                   onchange="filterProducts()"
+                   >  -->
+            	<!-- <input type="range" 
+            		   class="max-range" 
+            		   min="0" 
+            		   max="100000" 
+            		   value="100000" 
+            		   step="100"
+                   onchange="filterProducts()"
+                   >  -->
             </div> 
-              
+            <input type="submit" value="Szűrés">
+            </form>
               <br><br><br><br><br><br><br><br><br>
             </div>
-            <div class="col-lg-9 products">
+            <div class="col-lg-9 products" id="products">
             <?php
     // Ellenőrizd az eredményeket
     if ($result->num_rows > 0) {
@@ -204,6 +247,7 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script src="ui.js"></script>
 
     
     <div id="snackbar">A termék a kosárba került!</div>

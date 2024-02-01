@@ -94,16 +94,27 @@ for (let i = 0; i < priceInputvalue.length; i++) {
     } 
 }
 
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
 function updateVal() {
-    minVal = 0
-    maxVal = 100000
-    priceInputvalue[0].value = minVal; 
-    priceInputvalue[1].value = maxVal; 
+    minVal = priceInputvalue[0].value;
+    maxVal = priceInputvalue[1].value;
     rangevalue.style.left = 
         `${(minVal / rangeInputvalue[0].max) * 100}%`; 
     rangevalue.style.right = 
         `${100 - (maxVal / rangeInputvalue[1].max) * 100}%`; 
+    console.log(rangevalue.style.right);
 }
+
+document.getElementById('filterform').addEventListener('submit', filterProducts);
+
+function filterProducts() {
+    var minPrice = document.getElementById('min-price').value;
+    var maxPrice = document.getElementById('max-price').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'products.php?minPrice=' + minPrice + '&maxPrice=' + maxPrice, true);
+    //xhr.onload = function() {
+    //    if (this.status == 200) {
+    //        document.innerHTML = this.responseText;
+    //    }
+    //}
+    xhr.send();
+};
