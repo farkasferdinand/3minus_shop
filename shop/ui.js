@@ -107,14 +107,21 @@ function updateVal() {
 document.getElementById('filterform').addEventListener('submit', filterProducts);
 
 function filterProducts() {
+    var brands = ['disney', 'marvel', 'air_val']
     var minPrice = document.getElementById('min-price').value;
     var maxPrice = document.getElementById('max-price').value;
+    var male = document.getElementById('input-male').checked;
+    var female = document.getElementById('input-male').checked;
+
+    var selectedBrands = brands.filter(function(brand) {
+        return document.getElementById(brand).checked;
+    }).join(',');    
+
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'products.php?minPrice=' + minPrice + '&maxPrice=' + maxPrice, true);
-    //xhr.onload = function() {
-    //    if (this.status == 200) {
-    //        document.innerHTML = this.responseText;
-    //    }
-    //}
+    xhr.open('GET', 'products.php?minPrice=' + minPrice + '&maxPrice=' + maxPrice + male + female +selectedBrands, true);
+
+
     xhr.send();
 };
+

@@ -17,11 +17,15 @@ $typeFilter = isset($_GET['ptype']) ? $_GET['ptype'] : null;
 
 $minPrice = isset($_GET['minprice']) ? $_GET['minprice'] : 0;
 $maxPrice = isset($_GET['maxprice']) ? $_GET['maxprice'] : 100000;
+
+//$brands = isset($_GET['brands']) ? $_GET['brands'] : null;
+$brands = isset($_GET['brands']) ? $_GET['brands'] : null;
+
 echo $minPrice;
 echo $maxPrice;
 
 // Lekérdezés az árparaméter alapján
-$sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, strength, ptype FROM products";
+$sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, brand_friendly, strength, ptype FROM products";
 
 $wused = false;
 
@@ -163,6 +167,7 @@ $result = $conn->query($sql);
                         <div class="price-slider">
                         </div>
                     </div>
+
                   </div>
 
           
@@ -172,24 +177,42 @@ $result = $conn->query($sql);
                 echo "<input type='range' class='min-range' min='0' max='99500' value='$minPrice' step='100' onchange='filterProducts()'>";
                 echo "<input type='range' class='max-range' min='500' max='100000' value='$maxPrice' step='100' onchange='filterProducts()'>";
               ?>
-            	<!-- <input type="range" 
-            		   class="min-range" 
-            		   min="0" 
-            		   max="99500" 
-            		   value="0" 
-            		   step="100"
-                   onchange="filterProducts()"
-                   >  -->
-            	<!-- <input type="range" 
-            		   class="max-range" 
-            		   min="0" 
-            		   max="100000" 
-            		   value="100000" 
-            		   step="100"
-                   onchange="filterProducts()"
-                   >  -->
+
             </div> 
-            <input type="submit" value="Szűrés">
+
+
+
+            <input type="submit" value="Szűrés"><br>
+
+            <p>Nem</p>
+            <input type="checkbox" id="male" name="male" value="true">
+            <label for="male">Férfi</label><br>
+            <input type="checkbox" id="female" name="female" value="true">
+            <label for="female">Női</label>
+
+            <p>Márka</p>
+            <input type="checkbox" id="disney" name="brands[]" value="disney">
+            <label for="disney">Disney</label><br>
+
+            <input type="checkbox" id="marvel" name="brands[]" value="marvel">
+            <label for="marvel">Marvel</label><br>
+
+            <input type="checkbox" id="air_val" name="brands[]" value="air_val">
+            <label for="air_val">Air Val</label><br>
+            <?php
+            //  if ($result->num_rows > 0) {
+//
+            //    // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
+            //    while($row = $result->fetch_assoc()) {
+            //        echo '<input type="checkbox" id="' . $row["brand_friendly"] . '" name="brands[]" value="' . $row["brand_friendly"] . '">';
+            //        echo '<label for="' . $row["brand_friendly"] . '">' . $row["brand"] . '</label><br>';
+            //    }
+            //} else {
+            //    echo "Nincs a paramétereknek megfelelő termék az adatbázisban.";
+            //}
+
+            ?>
+
             </form>
               <br><br><br><br><br><br><br><br><br>
             </div>
