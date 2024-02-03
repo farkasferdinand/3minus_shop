@@ -18,13 +18,12 @@ $typeFilter = isset($_GET['ptype']) ? $_GET['ptype'] : null;
 $minPrice = isset($_GET['minprice']) ? $_GET['minprice'] : 0;
 $maxPrice = isset($_GET['maxprice']) ? $_GET['maxprice'] : 100000;
 
-//$brands = isset($_GET['brands']) ? $_GET['brands'] : null;
 $brands = isset($_GET['brands']) ? $_GET['brands'] : null;
+$gender = isset($_GET['gender']) ? $_GET['gender'] : null;
 
 echo $minPrice;
 echo $maxPrice;
 
-// Lekérdezés az árparaméter alapján
 $sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, brand_friendly, strength, ptype FROM products";
 
 $wused = false;
@@ -47,6 +46,34 @@ if ($minPrice !== null && $maxPrice !== null) {
 
   $sql .= "price BETWEEN $minPrice AND $maxPrice";
 }
+
+if (!empty($brands)) {
+  $brandList = implode("','", $brands);
+  
+  if ($wused) {
+      $sql .= " AND ";
+  } else {
+      $sql .= " WHERE ";
+      $wused = true;
+  }
+
+  $sql .= "brand_friendly IN ('$brandList')";
+}
+
+if (!empty($gender)) {
+  $genderList = implode("','", $gender);
+  
+  if ($wused) {
+      $sql .= " AND ";
+  } else {
+      $sql .= " WHERE ";
+      $wused = true;
+  }
+
+  $sql .= "gender IN ('$genderList')";
+}
+
+echo $sql;
 
 
 $result = $conn->query($sql);
@@ -185,9 +212,9 @@ $result = $conn->query($sql);
             <input type="submit" value="Szűrés"><br>
 
             <p>Nem</p>
-            <input type="checkbox" id="male" name="male" value="true">
+            <input type="checkbox" id="male" name="gender[]" value="male">
             <label for="male">Férfi</label><br>
-            <input type="checkbox" id="female" name="female" value="true">
+            <input type="checkbox" id="female" name="gender[]" value="female">
             <label for="female">Női</label>
 
             <p>Márka</p>
