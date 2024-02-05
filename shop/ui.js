@@ -106,6 +106,13 @@ function updateVal() {
 
 document.getElementById('filterform').addEventListener('submit', filterProducts);
 
+function submitFilterForm() {
+    var select = document.getElementById('orderby_select');
+    var select_fake = document.getElementById('orderby');
+    select_fake.value = select.value;
+    document.getElementById('filterform').submit();
+}
+
 function filterProducts() {
     var brands = ['disney', 'marvel', 'air_val']
     var minPrice = document.getElementById('min-price').value;
@@ -113,15 +120,18 @@ function filterProducts() {
     var male = document.getElementById('input-male').checked;
     var female = document.getElementById('input-male').checked;
 
+    var select_fake = document.getElementById('orderby');
+
     var selectedBrands = brands.filter(function(brand) {
         return document.getElementById(brand).checked;
     }).join(',');    
 
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'products.php?minPrice=' + minPrice + '&maxPrice=' + maxPrice + male + female +selectedBrands, true);
+    xhr.open('GET', 'products.php?minPrice=' + minPrice + '&maxPrice=' + maxPrice + male + female +selectedBrands + select_fake.value, true);
 
 
     xhr.send();
 };
+
 

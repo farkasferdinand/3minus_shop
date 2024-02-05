@@ -249,8 +249,8 @@ function makeSummary() {
     var shippingAmount = parseInt(document.getElementById("amountShipping").textContent.split(' ')[0]);
     var payAmount = parseInt(document.getElementById("amountPay").textContent.split(' ')[0]);
 
-    summaryHTML += '<p>Szállítás:' + shippingAmount+ ' Ft<p>';
-    summaryHTML += '<p>Fizetési mód:' + payAmount+ ' Ft<p>';
+    summaryHTML += '<p>Szállítás:' + shippingAmount+ ' Ft<br>';
+    summaryHTML += 'Fizetési mód:' + payAmount+ ' Ft</p>';
     totalAmount = totalAmount + shippingAmount + payAmount;
     summaryHTML += '<p><strong>Összesen:</strong> ' + totalAmount + ' Ft</p>';
     alert(summaryHTML);

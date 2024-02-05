@@ -21,6 +21,8 @@ $maxPrice = isset($_GET['maxprice']) ? $_GET['maxprice'] : 100000;
 $brands = isset($_GET['brands']) ? $_GET['brands'] : null;
 $gender = isset($_GET['gender']) ? $_GET['gender'] : null;
 
+$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : "abc_asc";
+
 echo $minPrice;
 echo $maxPrice;
 
@@ -71,6 +73,16 @@ if (!empty($gender)) {
   }
 
   $sql .= "gender IN ('$genderList')";
+}
+
+if ($orderby == "abc_asc") {
+  $sql .= " ORDER BY name ASC";
+} elseif ($orderby == "abc_desc") {
+  $sql .= " ORDER BY name DESC";
+} elseif ($orderby == "price_asc") {
+  $sql .= " ORDER BY price ASC";
+} elseif ($orderby == "price_desc") {
+  $sql .= " ORDER BY price DESC";
 }
 
 echo $sql;
@@ -164,7 +176,7 @@ $result = $conn->query($sql);
           <div class="row">
             <div class="col-lg-3 sidebar">
 
-                <form id="filterform">
+                <form id="filterform" name="filterform">
                   <div class="price-input-container">
                     <p>Ár (Ft)</p>
                     <div class="price-input">
@@ -212,40 +224,86 @@ $result = $conn->query($sql);
             <input type="submit" value="Szűrés"><br>
 
             <p>Nem</p>
-            <input type="checkbox" id="male" name="gender[]" value="male">
-            <label for="male">Férfi</label><br>
-            <input type="checkbox" id="female" name="gender[]" value="female">
-            <label for="female">Női</label>
-
-            <p>Márka</p>
-            <input type="checkbox" id="disney" name="brands[]" value="disney">
-            <label for="disney">Disney</label><br>
-
-            <input type="checkbox" id="marvel" name="brands[]" value="marvel">
-            <label for="marvel">Marvel</label><br>
-
-            <input type="checkbox" id="air_val" name="brands[]" value="air_val">
-            <label for="air_val">Air Val</label><br>
             <?php
-            //  if ($result->num_rows > 0) {
-//
-            //    // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
-            //    while($row = $result->fetch_assoc()) {
-            //        echo '<input type="checkbox" id="' . $row["brand_friendly"] . '" name="brands[]" value="' . $row["brand_friendly"] . '">';
-            //        echo '<label for="' . $row["brand_friendly"] . '">' . $row["brand"] . '</label><br>';
-            //    }
-            //} else {
-            //    echo "Nincs a paramétereknek megfelelő termék az adatbázisban.";
-            //}
+              if (!empty($gender) && in_array("male", $gender))
+              {
+                echo "<input type='checkbox' id='male' name='gender[]' value='male' checked>";
+                echo "<label for='male'>Férfi</label><br>";
+              } else {
+                echo "<input type='checkbox' id='male' name='gender[]' value='male'>";
+                echo "<label for='male'>Férfi</label><br>";
+              };
 
+              if (!empty($gender) && in_array("female", $gender))
+              {
+                echo "<input type='checkbox' id='female' name='gender[]' value='female' checked>";
+                echo "<label for='female'>Női</label>";
+              } else {
+                echo "<input type='checkbox' id='female' name='gender[]' value='female'>";
+                echo "<label for='female'>Női</label>";
+              };
+              
+              echo "<p>Márka</p>";
+
+              if (!empty($brands) && in_array("disney", $brands))
+              {
+                echo "<input type='checkbox' id='disney' name='brands[]' value='disney' checked>";
+                echo "<label for='disney'>Disney</label><br>";
+              } else {
+                echo "<input type='checkbox' id='disney' name='brands[]' value='disney'>";
+                echo "<label for='disney'>Disney</label><br>";
+              }
+
+              if (!empty($brands) && in_array("marvel", $brands))
+              {
+                echo "<input type='checkbox' id='marvel' name='brands[]' value='marvel' checked>";
+                echo "<label for='marvel'>Marvel</label><br>";
+              } else {
+                echo "<input type='checkbox' id='marvel' name='brands[]' value='marvel'>";
+                echo "<label for='marvel'>Marvel</label><br>";
+              }
+
+              if (!empty($brands) && in_array("air_val", $brands))
+              {
+                echo "<input type='checkbox' id='air_val' name='brands[]' value='air_val' checked>";
+                echo "<label for='air_val'>Air Val</label><br>";
+              } else {
+                echo "<input type='checkbox' id='air_val' name='brands[]' value='air_val'>";
+                echo "<label for='air_val'>Air Val</label><br>";
+              }
+
+              
+            
             ?>
-
+                
+                <select name="orderby" id="orderby" hidden>
+                  <option value="abc_asc">ABC szerint (növekvő)</option>
+                  <option value="abc_desc">ABC szerint (csökkenő)</option>
+                  <option value="price_asc">Ár szerint (növekvő)</option>
+                  <option value="price_desc">Ár szerint (csökkenő)</option>
+                </select>
             </form>
               <br><br><br><br><br><br><br><br><br>
             </div>
-            <div class="col-lg-9 products" id="products">
-            <?php
-    // Ellenőrizd az eredményeket
+            <div class="col-lg-9">
+              
+                <select name="orderby_select" id="orderby_select" onchange = "submitFilterForm()">
+                  <option value="abc_asc">ABC szerint (növekvő)</option>
+                  <option value="abc_desc">ABC szerint (csökkenő)</option>
+                  <option value="price_asc">Ár szerint (növekvő)</option>
+                  <option value="price_desc">Ár szerint (csökkenő)</option>
+                </select>
+                <?php 
+                echo "<script defer>";
+                echo "var select = document.getElementById('orderby_select');";
+                echo "select.value = '$orderby';";
+                echo "var select_fake = document.getElementById('orderby');";
+                echo "select_fake.value = select.value;";
+                echo "</script>";
+                ?>
+              <div class="products" id="products">
+              <?php
+              // Ellenőrizd az eredményeket
     if ($result->num_rows > 0) {
         // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
         while($row = $result->fetch_assoc()) {
@@ -264,6 +322,9 @@ $result = $conn->query($sql);
 // Adatbázis kapcsolat lezárása
 $conn->close();
 ?>
+              </div>
+
+    
               <br><br><br><br><br><br><br><br><br>
             </div>
           </div>
