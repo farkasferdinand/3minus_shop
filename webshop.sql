@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Jan 24. 21:30
+-- Létrehozás ideje: 2024. Feb 05. 21:37
 -- Kiszolgáló verziója: 10.4.27-MariaDB
 -- PHP verzió: 8.1.12
 
@@ -96,7 +96,24 @@ INSERT INTO `orders` (`order_id`, `name`, `email`, `zipcode`, `city`, `address`,
 (52, 'aaaa', 'aaaa@aaa.aaa', '0123', 'aaa', 'asd ', 'asd', '', '2024-01-20', '1,1,1,2'),
 (53, 'Tamás Ferdinánd Farkas', 'farkasferdike@gmail.com', '2941', 'Ács', 'Gárdonyi Géza u. 51', '06703617252', '', '2024-01-20', '1,1,1'),
 (54, 'aaaa', '3minus.perfumes@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-20', '1,1,1'),
-(55, 'aaaa', '3minus.perfumes@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-20', '1,1,1');
+(55, 'aaaa', '3minus.perfumes@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-20', '1,1,1'),
+(56, '', '', '', '', '', '', '', '2024-01-28', '3,3,3,3,3,2'),
+(57, '', 'farkasferdike@gmail.com', '1234', 'Miskolc', 'Alma ucca 13', '014565', 'nope', '2024-01-29', '3,3,3'),
+(58, '', 'farkasferdike@gmail.com', '1234', 'aaa', 'aaa', '01234', '', '2024-01-29', '3,3,3,3'),
+(59, 'aaa aaav', 'farkasferdike@gmail.com', '1234', 'aaa', 'váci ucca 4', '0123', '', '2024-01-29', '3,3,3,3'),
+(60, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'new york', 'váci ucca 4', '01235656', '', '2024-01-29', '2,2,2,1'),
+(61, ' ', '', '', '', '', '', '', '2024-01-29', '1'),
+(62, 'aaa aaa', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-29', '1'),
+(63, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-29', '3,3'),
+(64, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-29', '3,3'),
+(65, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-29', '3,3'),
+(66, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'váci ucca 4', '0123', '', '2024-01-29', '3,3'),
+(67, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'alma utca 6', '0123', '', '2024-01-29', '3,3'),
+(68, 'Lakatos József', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'alma utca 6', '0123', '', '2024-01-29', '3,3'),
+(69, 'Orbán Viktor', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'gyurcsány ferenc ucca 12', '123123', '', '2024-02-05', '1,3,2,2'),
+(70, 'Orbán Viktor', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'gyurcsány ferenc ucca 12', '123123', '', '2024-02-05', '1,3,2,2'),
+(71, 'Orbán Viktor', 'farkasferdike@gmail.com', '8000', 'Miskolc', 'gyurcsány ferenc ucca 12', '123123', '', '2024-02-05', '1,3,2,2'),
+(72, 'obán viktor', 'farkasferdike@gmail.com', '8000', 'alcsút', 'gyurcsány ferec ucca 89', '123123124', 'milyen feri?xddd', '2024-02-05', '1,1,1,1,3,3,3,3,3,2,2,2');
 
 -- --------------------------------------------------------
 
@@ -112,6 +129,7 @@ CREATE TABLE `products` (
   `url` varchar(200) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `brand` varchar(50) NOT NULL,
+  `brand_friendly` varchar(50) NOT NULL,
   `strength` varchar(100) NOT NULL,
   `ptype` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -120,11 +138,11 @@ CREATE TABLE `products` (
 -- A tábla adatainak kiíratása `products`
 --
 
-INSERT INTO `products` (`product_id`, `name`, `price`, `thumbnail`, `url`, `gender`, `brand`, `strength`, `ptype`) VALUES
-(1, 'Marvel Spiderman Eau de Toilette', 1990, 'img/product1.webp', '', 'ferfi', 'Marvel', 'Eau de Toilette', 'parfum'),
-(2, 'Disney Frozen II Elsa by Disney, 3.4 oz Eau De Toilette', 2490, 'img/product2.jpg', '', 'noi', 'Disney', 'Eau de Toilette', 'parfum'),
-(3, 'Air Val Minions Eau de Toilette', 1990, 'img/product3.webp', '', 'ferfi', 'Air Val', 'Eau de Toilette', 'parfum'),
-(4, 'nemtudom', 12, '', '', '', '', '', 'olaly');
+INSERT INTO `products` (`product_id`, `name`, `price`, `thumbnail`, `url`, `gender`, `brand`, `brand_friendly`, `strength`, `ptype`) VALUES
+(1, 'Spiderman Eau de Toilette', 19900, 'img/product1.webp', '', 'male', 'Marvel', 'marvel', 'Eau de Toilette', 'parfum'),
+(2, 'Frozen II Elsa by Disney, 3.4 oz Eau De Toilette', 24900, 'img/product2.jpg', '', 'female', 'Disney', 'disney', 'Eau de Toilette', 'parfum'),
+(3, 'Minions Eau de Toilette', 1990, 'img/product3.webp', '', 'male', 'Air Val', 'air_val', 'Eau de Toilette', 'parfum'),
+(4, 'nemtudom', 12, '', '', '', '', '', '', 'olaly');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -150,7 +168,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
