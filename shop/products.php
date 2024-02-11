@@ -23,9 +23,6 @@ $gender = isset($_GET['gender']) ? $_GET['gender'] : null;
 
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : "abc_asc";
 
-echo $minPrice;
-echo $maxPrice;
-
 $sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, brand_friendly, strength, ptype FROM products";
 
 $wused = false;
@@ -84,8 +81,6 @@ if ($orderby == "abc_asc") {
 } elseif ($orderby == "price_desc") {
   $sql .= " ORDER BY price DESC";
 }
-
-echo $sql;
 
 
 $result = $conn->query($sql);
@@ -178,7 +173,8 @@ $result = $conn->query($sql);
 
                 <form id="filterform" name="filterform">
                   <div class="price-input-container">
-                    <p>Ár (Ft)</p>
+                    <p class="p-sidebar">Ár (Ft)</p>
+                    <hr class='hr-sidebar'>
                     <div class="price-input">
                         <div class="price-field">
                             <div id="input-center">
@@ -221,60 +217,62 @@ $result = $conn->query($sql);
 
 
 
-            <input type="submit" value="Szűrés"><br>
+            
 
-            <p>Nem</p>
+            <p class='p-sidebar'>Nem</p>
+            <hr class='hr-sidebar'>
             <?php
               if (!empty($gender) && in_array("male", $gender))
               {
                 echo "<input type='checkbox' id='male' name='gender[]' value='male' checked>";
-                echo "<label for='male'>Férfi</label><br>";
+                echo "<label for='male'> Férfi</label><br>";
               } else {
                 echo "<input type='checkbox' id='male' name='gender[]' value='male'>";
-                echo "<label for='male'>Férfi</label><br>";
+                echo "<label for='male'> Férfi</label><br>";
               };
 
               if (!empty($gender) && in_array("female", $gender))
               {
                 echo "<input type='checkbox' id='female' name='gender[]' value='female' checked>";
-                echo "<label for='female'>Női</label>";
+                echo "<label for='female'> Női</label>";
               } else {
                 echo "<input type='checkbox' id='female' name='gender[]' value='female'>";
-                echo "<label for='female'>Női</label>";
+                echo "<label for='female'> Női</label>";
               };
               
-              echo "<p>Márka</p>";
+              echo "<p class='p-sidebar'>Márka</p><hr class='hr-sidebar'>";
 
               if (!empty($brands) && in_array("disney", $brands))
               {
                 echo "<input type='checkbox' id='disney' name='brands[]' value='disney' checked>";
-                echo "<label for='disney'>Disney</label><br>";
+                echo "<label for='disney'> Disney</label><br>";
               } else {
                 echo "<input type='checkbox' id='disney' name='brands[]' value='disney'>";
-                echo "<label for='disney'>Disney</label><br>";
+                echo "<label for='disney'> Disney</label><br>";
               }
 
               if (!empty($brands) && in_array("marvel", $brands))
               {
                 echo "<input type='checkbox' id='marvel' name='brands[]' value='marvel' checked>";
-                echo "<label for='marvel'>Marvel</label><br>";
+                echo "<label for='marvel'> Marvel</label><br>";
               } else {
                 echo "<input type='checkbox' id='marvel' name='brands[]' value='marvel'>";
-                echo "<label for='marvel'>Marvel</label><br>";
+                echo "<label for='marvel'> Marvel</label><br>";
               }
 
               if (!empty($brands) && in_array("air_val", $brands))
               {
                 echo "<input type='checkbox' id='air_val' name='brands[]' value='air_val' checked>";
-                echo "<label for='air_val'>Air Val</label><br>";
+                echo "<label for='air_val'> Air Val</label><br>";
               } else {
                 echo "<input type='checkbox' id='air_val' name='brands[]' value='air_val'>";
-                echo "<label for='air_val'>Air Val</label><br>";
+                echo "<label for='air_val'> Air Val</label><br>";
               }
 
               
             
             ?>
+            <input type="submit" value="Szűrés" id="filterButton" class="cartbtn submitbtn"><br>
                 
                 <select name="orderby" id="orderby" hidden>
                   <option value="abc_asc">ABC szerint (növekvő)</option>
@@ -283,11 +281,10 @@ $result = $conn->query($sql);
                   <option value="price_desc">Ár szerint (csökkenő)</option>
                 </select>
             </form>
-              <br><br><br><br><br><br><br><br><br>
             </div>
             <div class="col-lg-9">
               
-                <select name="orderby_select" id="orderby_select" onchange = "submitFilterForm()">
+                <select name="orderby_select" id="orderby_select" onchange = "submitFilterForm()" class="form-select">
                   <option value="abc_asc">ABC szerint (növekvő)</option>
                   <option value="abc_desc">ABC szerint (csökkenő)</option>
                   <option value="price_asc">Ár szerint (növekvő)</option>
@@ -308,11 +305,11 @@ $result = $conn->query($sql);
         // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
         while($row = $result->fetch_assoc()) {
             echo '<div class="product-card">';
-            echo '<div class="pr-img-container"><img src="' . $row["thumbnail"] . '" alt="' . $row["name"] . '"></div>';
+            echo '<a href="product_page.php?id=' . $row["product_id"] .'"><div class="pr-img-container"><img src="' . $row["thumbnail"] . '" alt="' . $row["name"] . '"></div></a>';
             echo '<p class="pr-brand-name">'. $row["brand"] .'</p>';
-            echo '<div class="pr-text-container"><a href="' . $row["url"] . '"><h3>' . $row["name"] . '</h3></a></div>';
+            echo '<div class="pr-text-container"><a href="product_page.php?id=' . $row["product_id"] .'"><h3>' . $row["name"] . '</h3></a></div>';
             echo '<div class="pr-button-container"><p>' . $row["price"] . ' Ft</p>';
-            echo '<button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ')">Kosárba</button></div>';
+            echo '<button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ', 1)">Kosárba</button></div>';
             echo '</div>';
         }
     } else {
@@ -323,9 +320,6 @@ $result = $conn->query($sql);
 $conn->close();
 ?>
               </div>
-
-    
-              <br><br><br><br><br><br><br><br><br>
             </div>
           </div>
 

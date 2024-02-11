@@ -1,3 +1,66 @@
+<?php
+// Adatbázis kapcsolat létrehozása
+$servername = "localhost"; // Adatbázis szerver neve vagy IP-címe
+$username = "om"; // Adatbázis felhasználói név
+$password = "om"; // Adatbázis jelszó
+$dbname = "webshop"; // Adatbázis neve
+
+// Kapcsolat létrehozása
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Kapcsolat ellenőrzése
+if ($conn->connect_error) {
+    die("Kapcsolódási hiba: " . $conn->connect_error);
+}
+
+// Ha azonosító GET kérés érkezik
+if (isset($_GET['id'])) {
+    $productId = $_GET['id'];
+
+    // SQL lekérdezés a termék adatainak lekérésére
+    $sql = "SELECT *
+            FROM products
+            INNER JOIN productdata ON products.product_id = productdata.product_id
+            WHERE products.product_id = $productId";
+
+    echo $sql;
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // A termék adatainak kiírása
+        while($row = $result->fetch_assoc()) {
+            $name = $row["name"];
+            $brand = $row["brand"];
+            $size = $row["size"];
+            $strength = $row["strength"];
+            $price = $row["price"];
+            $stock = $row["stock"];
+            $desc_short = $row["desc_short"];
+            $desc = $row["description"];
+            $flavor_table = $row["flavor_table"];
+            $img1 = $row["image1"];
+            $img2 = $row["image2"];
+            $gender = $row["gender"];
+        }
+    } else {
+        echo "A termék nem található.";
+    }
+
+    if ($gender == "male") {
+      $gender_fake = "férfi";
+    } else {
+      $gender_fake = "női";
+    }
+
+} else {
+    echo "Nincs megadva azonosító a termék lekéréséhez.";
+}
+
+// Kapcsolat bezárása
+$conn->close();
+?>
+
 <!doctype html>
 <html lang="hu">
 
@@ -25,6 +88,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 <script src="https://kit.fontawesome.com/8cd5027783.js" crossorigin="anonymous"></script>
+<script src="shopSystem.js"></script>
 
 
   <title>3minus Webshop</title>
@@ -81,77 +145,89 @@
                 <div class = "product-imgs col-lg-6">
                   <div class = "img-display">
                     <div class = "img-showcase">
-                      <img src = "img/product1.webp" alt = "shoe image" class="primg">
-                      <img src = "img/product2.jpg" alt = "shoe image" class="primg">
+                      <img src = "<?php
+                        echo $img1;
+                      ?>" alt = "termékkép" class="primg">
+                      <img src = "<?php
+                        echo $img2;
+                      ?>" alt = "termékkép" class="primg">
                     </div>
                   </div>
                   <div class = "img-select">
                     <div class = "img-item">
                       <a href = "#" data-id = "1">
-                        <img src = "img/product1.webp" alt = "shoe image" class="primg primg-small">
+                        <img src = "<?php
+                        echo $img1;
+                      ?>" alt = "termékkép" class="primg primg-small">
                       </a>
                     </div>
                     <div class = "img-item">
                       <a href = "#" data-id = "2">
-                        <img src = "img/product2.jpg" alt = "shoe image" class="primg primg-small">
+                        <img src = "<?php
+                        echo $img2;
+                      ?>" alt = "termékkép" class="primg primg-small">
                       </a>
                     </div>
                   </div>
                 </div>
                 <!-- card right -->
                 <div class = "product-content col-lg-6">
-                  <h3 class="product-brand">Marvel</h3>
-                  <h2 class = "product-title">Spiderman Eau de Toilette</h2>
-                  <p class="product-size">100ml</p>
-                  <a href = "#" class = "product-link">Eau de Toilette</a>
-                  <p class="product-price">1990 Ft</p>
+                  <h3 class="product-brand"><?php
+                    echo $brand;
+                    ?></h3>
+                  <h2 class = "product-title">
+                    <?php
+                    echo $name;
+                    ?>
+                  </h2>
+                  <p class="product-size"><?php
+                    echo $size;
+                    ?></p>
+                  <a href = "#" class = "product-link"><?php
+                    echo $strength;
+                    ?></a>
+                  <a href = "#" class = "product-link"><?php
+                    echo $gender_fake;
+                    ?></a>
+                  <p class="product-price"><?php
+                    echo $price;
+                    ?> Ft</p>
                   <div class = "purchase-info">
 
-                    <div class="state instock">
-                      <i class="fa-solid fa-truck"></i>
-                      <span>Raktáron</span>
-                    </div>
-                    
-                    <input type = "number" min = "0" value = "1">
-                    <button class = "cartbtn-main">Kosárba</button>
+
+                    <?php
+                    if ($stock > 5) {
+                        echo "<div class='state instock'><i class='fa-solid fa-truck'></i><span> Raktáron</span></div>";
+                        echo "<input type = 'number' min = '1' value = '1' max='$stock' id='addcount'>
+                        <button class = 'cartbtn-main' onclick='addToCartBulk($productId)'>Kosárba</button>";
+                    } elseif ($stock > 0) {
+                        echo "<div class='state lowstock'><i class='fa-solid fa-boxes-stacked'></i></i><span> Utolsó darabok</span></div>";
+                        echo "<input type = 'number' min = '1' value = '1' max='$stock' id='addcount'>
+                        <button class = 'cartbtn-main' onclick='addToCartBulk($productId)'>Kosárba</button>";
+                    } else {
+                        echo "<div class='state nostock'><i class='fa-solid fa-x'></i><span> Nincs raktáron</span></div>";
+                    }
+                    ?>
 
                     
                   </div>
                   
                   <div class = "product-detail">
-                    <p>2013-ban a "Jégvarázs" meghódította a fiatal és nagy Disney-rajongók szívét, és azóta is töretlen népszerűségnek örvend. Íme egy illat minden Elsa és Anna rajongója számára, amely megdobogtatja a kis hercegnők szívét. A finom illat virágos és gyümölcsös jegyekkel vidám fiatalságot áraszt. Egy valóra vált mesebeli álom!</p>
+                    <p>
+                        <?php
+                            echo $desc_short;
+                        ?>
+                    </p>
                   </div>
                 </div>
           <div class="pr-desc">
             <h3>Leírás</h3>
-            <table class="table table-pr">
-              <tr>
-                <td>Fej</td>
-                <td>Áfonyalé, Frézia, Narancsvirág, Őszibarack, Piros alma</td>
-              </tr>
-              <tr>
-                <td>Szív</td>
-                <td>Jázmin, Gyöngyvirág, Szilva, Tubarózsa, Ylang-Ylang</td>
-              </tr>
-              <tr>
-                <td>Alap</td>
-                <td>Tölgymoha, Szantálfa, Fehér pézsma</td>
-              </tr>
-            </table>
-            <p>Fagyott időkben a természet varázslatos átváltozása megfoghatatlan inspirációt nyújt a kreativitás és a szépség világában. Ebben a lenyűgöző időszakban merül fel a Frozen II Elsa by Disney, egy különleges illat, mely magában hordozza a jégkristályok tündöklését és a hóesés hűvös varázsát. Ez az illatújítás az egyediség és a kifinomultság harmóniáját ötvözi, hogy magával ragadja az érzékek és a fantázia világát.</p>
-
-            <p>A Frozen II Elsa by Disney csomagolása már önmagában is lenyűgöző látványt nyújt. A tiszta, átlátszó üveg hűvös ragyogása és a finom, ezüstös díszítések jégkristályokat idéznek, melyek a hideg évszakok szépségét hivatottak megörökíteni. Az üveg csúcsát pedig egy elegáns ezüst kupola koronázza meg, mely a fagyott tájak titokzatos báját idézi.</p>
-            
-            <p>Az illat maga egy új dimenziót nyit a hideg időszakok varázsában. A felszabadult frissesség és a misztikus melegség találkozása ez, melyben az édes mandarin frissessége és a jeges bergamott hűvös eleganciája egymásba fonódik. Egy pillanat alatt elvarázsolja viselőjét, mint egy kristálytiszta hóesés, mely a csillogó napsugarakban táncol.</p>
-            
-            <p>A szívjegyek mélyén az illat megeleveníti a havas erdők titokzatos hangulatát. Az illatos szegfűszeg és a bűbájos jázmin fátyola olyan, mintha egy varázslatos erdőben sétálnánk, ahol minden mozdulat tele van titokzatos ígéretekkel és rejtelmekkel.</p>
-            
-            <p>A Frozen II Elsa by Disney alapjegyeiben pedig a melegség és a kifinomultság találkozik. A fás pézsma és a pacsuli buja mélységet és tartósságot kölcsönöz az illatnak, mely a hideg időben is felmelegíti a lelket és megidézi a tél varázsát.</p>
-            
-            <p>Ez az illat nem csupán egy parfüm, hanem egy egész világ, melyben a természet szépsége és a képzelet szabadsága egyesül. A Frozen II Elsa by Disney egy csábító utazásra hív mindenkit, hogy fedezze fel a hideg idők varázsát és a természet misztikus szépségét egy csupasz szellő érintésében. Legyen ez az illat a tied, hogy minden nap felidézhesd a tél bűvös pillanatait és az örökmozgó természet varázslatát.</p>
+            <?php
+                echo $flavor_table;
+                echo $desc;
+            ?>
           </div>
         </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
 
 
@@ -173,6 +249,8 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="script_productpage.js"></script>
+
+  <div id="snackbar">A termék a kosárba került!</div>
 </body>
 
 

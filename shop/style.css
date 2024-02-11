@@ -164,11 +164,11 @@ body {
 }
 
 .sidebar {
-    margin-top: 20px;
+    margin-top: 25px;
     border-radius: 10px;
     box-shadow: 3px 0px 15px rgb(160, 160, 160);
     background-color: white;
-    padding: 40px 40px 40px 40px;
+    padding: 15px 40px 15px 40px;
 }
 
 .caption-h3 {
@@ -189,7 +189,8 @@ body {
   
 .price-input .price-field { 
     display: flex; 
-    margin-bottom: 22px; 
+    margin-bottom: 20px; 
+    margin-top: 20px;
 } 
   
 .price-field {
@@ -241,6 +242,7 @@ input::-webkit-inner-spin-button {
   
 .range-input { 
     position: relative; 
+    margin-bottom: 20px;
 } 
   
 .range-input input { 
@@ -667,11 +669,12 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 2rem 1rem;
 }
 .product-title{
-    font-size: 3rem;
+    font-size: 2.5rem;
     text-transform: capitalize;
     font-weight: bold;
     position: relative;
-    margin: 1rem 0;
+    margin: 0;
+    padding: 0;
 }
 .product-link{
     text-decoration: none;
@@ -680,7 +683,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 0.9rem;
     display: inline-block;
     margin-bottom: 0.5rem;
-    background-color: #a88f45;
+    background-color: #886e36;
     color: #fff;
     padding: 0 0.3rem;
     transition: all 0.5s ease;
@@ -772,4 +775,69 @@ input[type="range"]::-webkit-slider-thumb {
     .product-content{
         padding-top: 0;
     }
+}
+
+.pr-desc {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.table-pr {
+    width: 100px;
+    margin: 20px;
+}
+
+.product-detail p{
+    font-size: 1.1em;
+}
+
+.product-brand {
+    margin: 0;
+    padding: 0;
+}
+
+.pr-display {
+    padding-top: 20px;
+}
+
+.state {
+    margin: 0 0 5px 0;
+}
+
+.instock {
+    color: seagreen;
+}
+
+.lowstock {
+    color: chocolate;
+}
+
+.nostock {
+    color: darkred;
+}
+
+#orderby_select {
+    margin: 20px 0 0 40px;
+}
+
+.submitbtn {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #886e36;
+    font-weight:regular;
+    margin-top: 20px;
+}
+
+input[type="checkbox"] {
+    accent-color: #886e36;
+    margin: 1px 10px 1px 5px;
+}
+
+.p-sidebar {
+    margin: 0;
+}
+
+.hr-sidebar {
+    margin: 2px 0 10px 0;
 }

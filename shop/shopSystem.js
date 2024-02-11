@@ -5,11 +5,18 @@ var summaryHTML = "";
 // [x] - Terméknév észlelés class alapján
 
 
-function addToCart(productId) {
-    cart.push(productId);
+function addToCart(productId, count) {
+    for (let i = 0; i < count; i++) {
+        cart.push(productId);
+    }
     saveCartToSession();
     snackbarAddedToCart();
     //alert("Hozzáadva");
+}
+
+function addToCartBulk(productId) {
+    addcount = document.getElementById("addcount").value;
+    addToCart(productId, addcount);
 }
 
 function prepare() {
