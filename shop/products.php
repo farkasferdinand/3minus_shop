@@ -23,6 +23,8 @@ $gender = isset($_GET['gender']) ? $_GET['gender'] : null;
 
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : "abc_asc";
 
+$search = isset($_GET['search']) ? $_GET['search'] : null;
+
 $sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, brand_friendly, strength, ptype FROM products";
 
 $wused = false;
@@ -72,6 +74,17 @@ if (!empty($gender)) {
   $sql .= "gender IN ('$genderList')";
 }
 
+if (!empty($search)) {
+  if ($wused) {
+      $sql .= " AND ";
+  } else {
+      $sql .= " WHERE ";
+      $wused = true;
+  }
+
+  $sql .= "searchname LIKE '%$search%'";
+}
+
 if ($orderby == "abc_asc") {
   $sql .= " ORDER BY name ASC";
 } elseif ($orderby == "abc_desc") {
@@ -81,6 +94,8 @@ if ($orderby == "abc_asc") {
 } elseif ($orderby == "price_desc") {
   $sql .= " ORDER BY price DESC";
 }
+
+
 
 
 $result = $conn->query($sql);
@@ -313,7 +328,7 @@ $result = $conn->query($sql);
             echo '</div>';
         }
     } else {
-        echo "Nincs a paramétereknek megfelelő termék az adatbázisban.";
+        echo "<p class='message'>Nem található a paramétereknek megfelelő termék.</p>";
     }
 
 // Adatbázis kapcsolat lezárása

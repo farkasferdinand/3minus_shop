@@ -841,3 +841,82 @@ input[type="checkbox"] {
 .hr-sidebar {
     margin: 2px 0 10px 0;
 }
+
+/* SEARCH -------------------------------------------------------------------------------------------------------------------------------------------- */
+
+.button {
+	display: inline-block;
+	background-color: transparent;
+	text-align: center;
+	color: #909090;
+	text-decoration: none;
+	cursor: pointer;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.button:hover {
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+	color: white;
+}
+
+.search-container {
+	position: relative;
+    margin-top: 50%;
+}
+
+.search:focus + .searchbutton {
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+	color: white;
+}
+
+.search {
+	position: absolute;
+	left: 10px; /* Button width-1px (Not 50px/100% because that will sometimes show a 1px line between the search box and button) */
+	outline: none;
+	border: none;
+	padding: 0;
+	width: 0;
+	height: 100%;
+	z-index: 10;
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+    border-radius: 4px;
+    margin-top: -25%;
+    background-color: #343332;
+    color: white;
+}
+
+.search:focus {
+	width: 240px; /* Bar width+1px */
+	padding: 0 8px 0 0;
+    background-color: #343332;
+}
+
+.expandright {
+	left: auto;
+	right: 25px; /* Button width-1px */
+}
+
+.expandright:focus {
+	padding: 0 0 0 16px;
+}
+
+#products {
+    display: table;
+}
+
+.message {
+    margin: 10px;
+}
