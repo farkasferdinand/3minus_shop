@@ -7,6 +7,9 @@ $dbname = "webshop";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+$brandsDefault = array("air_val", "marvel", "disney");
+$genderDefault = array("male", "female");
+
 // Ellenőrizd a kapcsolatot
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -18,14 +21,14 @@ $typeFilter = isset($_GET['ptype']) ? $_GET['ptype'] : null;
 $minPrice = isset($_GET['minprice']) ? $_GET['minprice'] : 0;
 $maxPrice = isset($_GET['maxprice']) ? $_GET['maxprice'] : 100000;
 
-$brands = isset($_GET['brands']) ? $_GET['brands'] : null;
-$gender = isset($_GET['gender']) ? $_GET['gender'] : null;
+$brands = isset($_GET['brands']) ? $_GET['brands'] : $brandsDefault;
+$gender = isset($_GET['gender']) ? $_GET['gender'] : $genderDefault;
 
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : "abc_asc";
 
 $search = isset($_GET['search']) ? $_GET['search'] : null;
 
-$sql = "SELECT product_id, name, thumbnail, price, url, gender, brand, brand_friendly, strength, ptype FROM products";
+$sql = "SELECT * FROM products";
 
 $wused = false;
 
@@ -138,7 +141,7 @@ $result = $conn->query($sql);
 
 <body onload="updateVal(); loadCart()">
 
-  <div>
+<div>
     <div class="row header">
       <div class="col-lg-3">
         <img src="src/logo.png" alt="" class="logo">
@@ -153,10 +156,10 @@ $result = $conn->query($sql);
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="index.html">Kezdőlap</a>
+                  <a class="nav-link "  href="#">Kezdőlap</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Parfümök</a>
+                  <a class="nav-link active" aria-current="page" href="products.php?ptype=parfum">Parfümök</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Parfümolajok</a>
@@ -170,6 +173,16 @@ $result = $conn->query($sql);
               </ul>
 
               <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item me-3 me-lg-0">
+                  <div class="search-container">
+                    <form action="products.php" method="get">
+                      <input class="search expandright" id="searchright" type="search" name="search" placeholder="Keresés...">
+                      <label class="button searchbutton" for="searchright"><i class="fa-solid fa-magnifying-glass"></i></label>
+                    </form>
+                  </div>
+                </li>
+
                 <li class="nav-item me-3 me-lg-0">
                     <a class="nav-link text-white" href="cart.html"><i class="fas fa-shopping-cart navcart"></i></a>
                 </li>
@@ -305,7 +318,12 @@ $result = $conn->query($sql);
                   <option value="price_asc">Ár szerint (növekvő)</option>
                   <option value="price_desc">Ár szerint (csökkenő)</option>
                 </select>
+
+                
                 <?php 
+                if ($search != null) {
+                  echo '<h4 id="search_text">Találatok a(z) <strong>' . $search . '</strong> kifejezésre</h4>';
+                }
                 echo "<script defer>";
                 echo "var select = document.getElementById('orderby_select');";
                 echo "select.value = '$orderby';";
@@ -319,12 +337,22 @@ $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
         while($row = $result->fetch_assoc()) {
-            echo '<div class="product-card">';
+            if ($row["originalprice"] == 0) {
+              echo '<div class="product-card">';
+            }
+            else {
+              echo '<div class="product-card sale" data-label="AKCIÓ!">';
+            }
             echo '<a href="product_page.php?id=' . $row["product_id"] .'"><div class="pr-img-container"><img src="' . $row["thumbnail"] . '" alt="' . $row["name"] . '"></div></a>';
             echo '<p class="pr-brand-name">'. $row["brand"] .'</p>';
             echo '<div class="pr-text-container"><a href="product_page.php?id=' . $row["product_id"] .'"><h3>' . $row["name"] . '</h3></a></div>';
-            echo '<div class="pr-button-container"><p>' . $row["price"] . ' Ft</p>';
-            echo '<button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ', 1)">Kosárba</button></div>';
+            if ($row["originalprice"] == 0) {
+              echo '<div class="pr-button-container"><div class="pricebox"><p class="currentprice">' . $row["price"] . ' Ft</p></div>';
+            }
+            else {
+              echo '<div class="pr-button-container "><div class="pricebox"><div><p class="originalprice">' . $row["originalprice"] . ' Ft</p><p class="currentprice">' . $row["price"] . ' Ft</p></div></div>';
+            }
+            echo '<div class="buttonbox"><button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ', 1)">Kosárba</button></div></div>';
             echo '</div>';
         }
     } else {

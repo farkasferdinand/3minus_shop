@@ -31,7 +31,7 @@
 
 <body>
 
-  <div>
+
     <div class="row header">
       <div class="col-lg-3">
         <img src="src/logo.png" alt="" class="logo">
@@ -92,8 +92,8 @@
         </div>
         <div class="col-lg-6 side2">
           <div class="side2-inner">
-            <h2 id="text1" class="floatFromBottom">Szagolj bele a jövőbe</h2>
-            <p id="text2" class="floatFromBottom">Shalimar parfümök már 199.990 Ft-tól</p>
+            <h2 id="text1" class="floatFromBottom">Érezd a különbséget</h2>
+            <p id="text2" class="floatFromBottom">Új Versace kollekció most 15% kedvezménnyel</p>
             <div class="button-container">
               <button class="borderbtn" id="button1">Tovább</button>
             </div>
@@ -103,8 +103,14 @@
       </div>
       <img src="src/overlay.png" alt="" id="overlay">
     </section>
+    <section class="section-main">
+      <div class="section-white">
+        <h3>Akciós termékek</h3>
+        <br><br><br><br><br><br>
+      </div>
+    </section>
     <br><br><br><br><br><br><br><br><br><br><br><br>
-  </div>
+
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

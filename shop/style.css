@@ -51,9 +51,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto 0 auto;
+/*     background-image: url("src/overlay.png");
+    background-size: contain;
+    background-repeat: no-repeat; */
+    height: calc(0.49493813273340832395950506186727 * 100vw);
+}
+
+.section-main {
+    position: relative;
+    display: flex;
     height: 100vh;
-    margin-left: auto;
-    margin-right: auto;
+    margin: -12px auto 0 auto;
+    padding: 0;
 }
 
 #overlay {
@@ -168,7 +178,7 @@ body {
     border-radius: 10px;
     box-shadow: 3px 0px 15px rgb(160, 160, 160);
     background-color: white;
-    padding: 15px 40px 15px 40px;
+    padding: 20px 40px 20px 40px;
 }
 
 .caption-h3 {
@@ -313,6 +323,7 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 3px 0px 13px rgb(180, 180, 180);
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
+    position : relative;
 }
 
 .product-card a {
@@ -351,6 +362,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
+    margin: 0;
 }
 
 .cartbtn-main {
@@ -377,15 +389,18 @@ input[type="range"]::-webkit-slider-thumb {
     /* margin-top: 10px; */
 }
 
-.pr-button-container {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
+
+
+.originalprice {
+    font-size: 1em;
+    text-decoration: line-through;
+    margin: 0;
 }
 
-.pr-button-container p{
+.currentprice{
     margin: 0;
     font-size: 1.2em;
+    vertical-align: middle;
 }
 
 .pr-brand-name {
@@ -818,7 +833,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #orderby_select {
-    margin: 20px 0 0 40px;
+    margin: 20px 0 0 20px;
 }
 
 .submitbtn {
@@ -919,4 +934,64 @@ input[type="checkbox"] {
 
 .message {
     margin: 10px;
+}
+
+.pr-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pricebox {
+    display: flex;
+    align-items: center;
+}
+
+.pricebox p{
+    line-height: 1em;
+}
+
+/* .buttonbox {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    align-items: right;
+} */
+
+.buttonbox {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#search_text {
+    margin: 10px 0 0 20px;
+}
+
+*, *::before, *::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+
+
+.sale::after{
+  position: absolute;
+  content: attr(data-label);
+  top: 11px;
+  right: -14px;
+  padding: 0.5rem;
+  width: 7rem;
+  background: #c21807;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2);
+}
+
+.section-white {
+    background-color: #C9C9C9;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
