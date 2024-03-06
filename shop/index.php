@@ -1,3 +1,22 @@
+<?php
+// Adatbázis kapcsolat beállítása (módosítsd az adatokat a saját adatbázisodhoz)
+$servername = "localhost";
+$username = "om";
+$password = "om";
+$dbname = "webshop";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+
+// Ellenőrizd a kapcsolatot
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM products";
+
+$result = $conn->query($sql);
+?>
 <!doctype html>
 <html lang="hu">
 
@@ -25,6 +44,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 <script src="https://kit.fontawesome.com/8cd5027783.js" crossorigin="anonymous"></script>
+<script src="ui_homepage.js"></script>
 
   <title>3minus Webshop</title>
 </head>
@@ -104,9 +124,48 @@
       <img src="src/overlay.png" alt="" id="overlay">
     </section>
     <section class="section-main">
-      <div class="section-white">
-        <h3>Akciós termékek</h3>
-        <br><br><br><br><br><br>
+      <div class="section-dark">
+        <h3 class="section-title-light">Akciós termékek</h3>
+        <div class="wrapper"> 
+        <i id="left" class="fa-solid  fas fa-angle-left"></i> 
+        <ul class="carousel"> 
+        <?php
+              // Ellenőrizd az eredményeket
+    if ($result->num_rows > 0) {
+        // Az árparaméter alapján szűrt termékek megjelenítése kártyák formájában
+        while($row = $result->fetch_assoc()) {
+          echo "<li class='card'>";
+            if ($row["originalprice"] == 0) {
+              echo '<div class="product-card">';
+            }
+            else {
+              echo '<div class="product-card sale" data-label="AKCIÓ!">';
+            }
+            echo '<a href="product_page.php?id=' . $row["product_id"] .'"><div class="pr-img-container"><img src="' . $row["thumbnail"] . '" alt="' . $row["name"] . '"></div></a>';
+            echo '<p class="pr-brand-name">'. $row["brand"] .'</p>';
+            echo '<div class="pr-text-container"><a href="product_page.php?id=' . $row["product_id"] .'"><h3>' . $row["name"] . '</h3></a></div>';
+            if ($row["originalprice"] == 0) {
+              echo '<div class="pr-button-container"><div class="pricebox"><p class="currentprice">' . $row["price"] . ' Ft</p></div>';
+            }
+            else {
+              echo '<div class="pr-button-container "><div class="pricebox"><div><p class="originalprice">' . $row["originalprice"] . ' Ft</p><p class="currentprice">' . $row["price"] . ' Ft</p></div></div>';
+            }
+            echo '<div class="buttonbox"><button class="cartbtn" onclick="addToCart(' . $row["product_id"] . ', 1)">Kosárba</button></div></div>';
+            echo '</div></li>';
+        }
+    } else {
+        echo "<p class='message'>Nem található a paramétereknek megfelelő termék.</p>";
+    }?>
+        </ul> 
+        <i id="right" class="fa-solid fas fa-angle-right"></i> 
+    </div> 
+      </div>
+    </section>
+
+    <section class="section-main">
+      <div class="section-blur">
+        <h3 class="section-title-light">3minus Jedlik Collection</h3>
+        <br><br><br><br><br>
       </div>
     </section>
     <br><br><br><br><br><br><br><br><br><br><br><br>

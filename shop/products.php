@@ -7,7 +7,7 @@ $dbname = "webshop";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-$brandsDefault = array("air_val", "marvel", "disney");
+$brandsDefault = array("air_val", "marvel", "disney", "versace", "giorgio_armani");
 $genderDefault = array("male", "female");
 
 // Ellenőrizd a kapcsolatot
@@ -100,7 +100,7 @@ if ($orderby == "abc_asc") {
 
 
 
-
+echo $sql;
 $result = $conn->query($sql);
 ?>
 
